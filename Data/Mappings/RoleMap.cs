@@ -8,7 +8,7 @@ namespace Blog.Data.Mappings
     {
         public void Configure(EntityTypeBuilder<Role> builder)
         {
-            builder.ToTable("Category");
+            builder.ToTable("Role");
 
             builder.HasKey(x => x.Id);
 

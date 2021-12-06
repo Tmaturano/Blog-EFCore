@@ -42,7 +42,7 @@ namespace Blog.Data.Mappings
                 .HasMany(x => x.Tags)
                 .WithMany(x => x.Posts)
                 .UsingEntity<Dictionary<string, object>>(
-                    "TagPost", //table name
+                    "PostTag", //table name
                     role => role
                         .HasOne<Tag>() // one tag
                         .WithMany() // with many posts
