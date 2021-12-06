@@ -1,38 +1,8 @@
 ﻿using Blog.Data;
-using Blog.Models;
 
 using (var context = new BlogDataContext())
 {
-    //context.Users.Add(new User
-    //{
-    //    Bio = "My Bio",
-    //    Name = "Thiago Maturana",
-    //    Email = "thiago@test.com",
-    //    Image = "https://test.com",
-    //    PasswordHash = "1234",
-    //    Slug = "thiago-maturana"
-    //});
-
-    //context.SaveChanges();
-
-    var user = context.Users.FirstOrDefault();
-    var tags = context.Tags.ToList();
-    var category = context.Categories.FirstOrDefault();
-
-    var post = new Post
-    {
-        Author = user,
-        Body = "My article 2",
-        Category = category,
-        Tags = tags,
-        CreateDate = DateTime.UtcNow,
-        Slug = "my-article-2",
-        Summary = "On this article we'llbe doing this and that...",
-        Title = "My Article 2"
-    };
-
-    context.Posts.Add(post);
-    context.SaveChanges();
+    
 
     //Create
     //var tag = new Tag
