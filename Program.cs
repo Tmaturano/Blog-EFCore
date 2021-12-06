@@ -1,6 +1,4 @@
 ﻿using Blog.Data;
-using Blog.Models;
-using Microsoft.EntityFrameworkCore;
 
 using (var context = new BlogDataContext())
 {
@@ -32,11 +30,11 @@ using (var context = new BlogDataContext())
 
     //if you are not going to Update or Remove, you can say to EF to not bring the metadata with .AsNoTracking() (Performance perspective)
 
-    var tags = context.Tags.AsNoTracking(); //not executed in database yet
+    //var tags = context.Tags.AsNoTracking(); //not executed in database yet
     //if you want to execute in database right here, you can call .ToList()
 
-    foreach (var tag in tags) //executed in database
-    {
-        Console.WriteLine(tag.Name);
-    }
+    //foreach (var tag in tags) //executed in database
+    //{
+    //    Console.WriteLine(tag.Name);
+    //}
 }
