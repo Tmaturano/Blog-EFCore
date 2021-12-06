@@ -9,3 +9,8 @@ Reviewing some EF Core fundamentals
 
 * To execute a migration:
   - dotnet ef database update
+
+* If you don't want to use migrations, you can delete the Migrations folder and the __EFMigrationsHistory table that is generated
+
+* There is a way also, to generate a SQL script through migrations:
+  - dotnet ef migrations script -o ./script.sql
