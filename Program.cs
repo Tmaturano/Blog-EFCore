@@ -29,6 +29,14 @@ using (var context = new BlogDataContext())
     users = GetUsers(context, 2, 25);
     users = GetUsers(context, 3, 25);
 
+
+    var posts = context.Posts
+        .Include(x => x.Author)
+        .ThenInclude(x => x.Roles); //Author Roles with SubSelect. Pay attention because it can cause performance issues with large data.
+
+
+
+
     //Create
     //var tag = new Tag
     //{
