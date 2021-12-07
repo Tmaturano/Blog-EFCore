@@ -25,10 +25,9 @@ using (var context = new BlogDataContext())
 
 
     //pagination:
-    var posts = GetPosts(context, 0, 25);
-    posts = GetPosts(context, 25, 25);
-    posts = GetPosts(context, 50, 25);
-    posts = GetPosts(context, 75, 25);
+    var users = GetUsers(context, 1, 25);
+    users = GetUsers(context, 2, 25);
+    users = GetUsers(context, 3, 25);
 
     //Create
     //var tag = new Tag
@@ -68,14 +67,14 @@ using (var context = new BlogDataContext())
 }
 
 //Pagination sample with EF
-static List<Post> GetPosts(BlogDataContext context, int skip = 0, int take = 25)
+static List<User> GetUsers(BlogDataContext context, int pageNumber = 0, int pageSize = 25)
 {
-    var posts = context
-        .Posts
+    var users = context
+        .Users
         .AsNoTracking()
-        .Skip(skip)
-        .Take(take)
+        .Skip((pageNumber - 1) * pageSize)
+        .Take(pageSize)
         .ToList();
 
-    return posts;
+    return users;
 }
