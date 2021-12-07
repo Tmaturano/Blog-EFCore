@@ -11,6 +11,7 @@ namespace Blog.Data
         public DbSet<Role> Roles { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<PostWithTagsCount> PostWithTagsCount { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options) 
             => options.UseSqlServer("Server=localhost,1433;Database=BlogFluent;User ID=sa;Password=Abcd1234!");
@@ -22,6 +23,18 @@ namespace Blog.Data
             modelBuilder.ApplyConfiguration(new RoleMap());
             modelBuilder.ApplyConfiguration(new TagMap());
             modelBuilder.ApplyConfiguration(new UserMap());
+
+            // Mapping queries and Views
+            modelBuilder.Entity<PostWithTagsCount>(x =>
+            {
+                x.HasNoKey();
+                x.ToSqlQuery(@"SELECT 
+                                [Title] AS [Name], 
+                                (SELECT COUNT([PostId]) 
+                                FROM [PostTag] 
+                                WHERE [PostId] = [Id]) AS [Count]
+                            FROM [Post]");
+            });
         }
     }
 }

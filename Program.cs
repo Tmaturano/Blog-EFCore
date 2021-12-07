@@ -25,17 +25,21 @@ using (var context = new BlogDataContext())
 
 
     //pagination:
-    var users = GetUsers(context, 1, 25);
-    users = GetUsers(context, 2, 25);
-    users = GetUsers(context, 3, 25);
+    //var users = GetUsers(context, 1, 25);
+    //users = GetUsers(context, 2, 25);
+    //users = GetUsers(context, 3, 25);
 
 
-    var posts = context.Posts
-        .Include(x => x.Author)
-        .ThenInclude(x => x.Roles); //Author Roles with SubSelect. Pay attention because it can cause performance issues with large data.
+    //var posts = context.Posts
+    //    .Include(x => x.Author)
+    //    .ThenInclude(x => x.Roles); //Author Roles with SubSelect. Pay attention because it can cause performance issues with large data.
 
 
-
+    var posts = context.PostWithTagsCount.ToList();
+    foreach (var item in posts)
+    {
+        Console.WriteLine($"{item.Name} - {item.Count}");
+    }
 
     //Create
     //var tag = new Tag
