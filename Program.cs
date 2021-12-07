@@ -1,27 +1,34 @@
 ﻿using Blog.Data;
+using Blog.Models;
 using Microsoft.EntityFrameworkCore;
 
 using (var context = new BlogDataContext())
 {
     //lazy loading:
-    var posts = context.Posts; //Tags will not be loaded here
-    foreach (var post in posts)
-    {
-        foreach (var tag in post.Tags)
-        {
-            //EF will load the Tags by using Lazy Loading (only when needed, Tags will be loaded)
-        }
-    }
+    //var posts = context.Posts; //Tags will not be loaded here
+    //foreach (var post in posts)
+    //{
+    //    foreach (var tag in post.Tags)
+    //    {
+    //        //EF will load the Tags by using Lazy Loading (only when needed, Tags will be loaded)
+    //    }
+    //}
 
 
     //eager loading (default):
     //The sample above will thrown an error if you want to use it, because Tags will be null 
-    var postsEager = context.Posts.Include(x => x.Tags).Select(x => new
-    {
-        Id = x.Id,
-        OtherName = x.Title
-    }); //will do an Inner Join with Tags
+    //var postsEager = context.Posts.Include(x => x.Tags).Select(x => new
+    //{
+    //    Id = x.Id,
+    //    OtherName = x.Title
+    //}); //will do an Inner Join with Tags
 
+
+    //pagination:
+    var posts = GetPosts(context, 0, 25);
+    posts = GetPosts(context, 25, 25);
+    posts = GetPosts(context, 50, 25);
+    posts = GetPosts(context, 75, 25);
 
     //Create
     //var tag = new Tag
@@ -58,4 +65,17 @@ using (var context = new BlogDataContext())
     //{
     //    Console.WriteLine(tag.Name);
     //}
+}
+
+//Pagination sample with EF
+static List<Post> GetPosts(BlogDataContext context, int skip = 0, int take = 25)
+{
+    var posts = context
+        .Posts
+        .AsNoTracking()
+        .Skip(skip)
+        .Take(take)
+        .ToList();
+
+    return posts;
 }
