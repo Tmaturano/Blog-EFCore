@@ -14,6 +14,8 @@ namespace Blog.Models
 
         public Category Category { get; set; }
         public User Author { get; set; }
-        public IList<Tag> Tags { get; set; }
+
+        // virtual: allow an item to be overriden and enable entity framework lazy loading for this item
+        public virtual IList<Tag> Tags { get; set; }
     }
 }

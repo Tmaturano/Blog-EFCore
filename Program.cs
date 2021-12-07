@@ -1,8 +1,27 @@
 ﻿using Blog.Data;
+using Microsoft.EntityFrameworkCore;
 
 using (var context = new BlogDataContext())
 {
-    
+    //lazy loading:
+    var posts = context.Posts; //Tags will not be loaded here
+    foreach (var post in posts)
+    {
+        foreach (var tag in post.Tags)
+        {
+            //EF will load the Tags by using Lazy Loading (only when needed, Tags will be loaded)
+        }
+    }
+
+
+    //eager loading (default):
+    //The sample above will thrown an error if you want to use it, because Tags will be null 
+    var postsEager = context.Posts.Include(x => x.Tags).Select(x => new
+    {
+        Id = x.Id,
+        OtherName = x.Title
+    }); //will do an Inner Join with Tags
+
 
     //Create
     //var tag = new Tag
